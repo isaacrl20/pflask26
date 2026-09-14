@@ -47,6 +47,20 @@ def listar_professor():
     conn.close()
     return render_template('professor/lista.html', lista_professor=lista)
 
+@app.route('/turma')
+def listar_turma():
+    # Conecta ao banco de dados
+    DB_PATH = "banco_escola.db"
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    # Executa consulta SQL
+    cursor.execute('SELECT id, nome, turma FROM turma')
+    # Obtém todos os registros
+    lista = cursor.fetchall()
+    # Fecha conexão
+    conn.close()
+    return render_template('turma/lista.html', lista_turma=lista)
+
 
 
 
