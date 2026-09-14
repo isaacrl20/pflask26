@@ -33,7 +33,7 @@ def listar_aluno():
     conn.close()
     return render_template('aluno/lista.html', lista=lista)
 
-]
+
 
 
 
