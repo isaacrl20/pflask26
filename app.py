@@ -22,7 +22,7 @@ def contato():
 @app.route('/aluno')
 def listar_aluno():
     # Conecta ao banco de dados
-    DB_PATH = r"C:\Users\Isaac\workspace_pweb\pflask26\banco_escola.db.sql"
+    DB_PATH = "C:\\Users\\Isaac\\workspace_pweb\\pflask26\\banco_escola.db"
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     # Executa consulta SQL
@@ -31,7 +31,7 @@ def listar_aluno():
     lista = cursor.fetchall()
     # Fecha conexão
     conn.close()
-    return render_template('aluno/lista.html', lista=lista)
+    return render_template('aluno/lista.html', lista_alunos=lista)
 
 
 
