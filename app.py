@@ -40,7 +40,7 @@ def listar_professor():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     # Executa consulta SQL
-    cursor.execute('SELECT id, nome, disciplina FROM professor')
+    cursor.execute('SELECT id, nome, disciplinas FROM professor')
     # Obtém todos os registros
     lista = cursor.fetchall()
     # Fecha conexão
