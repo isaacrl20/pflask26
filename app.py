@@ -40,7 +40,7 @@ def listar_professor():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     # Executa consulta SQL
-    cursor.execute('SELECT id, nome, idade, cidade FROM professor')
+    cursor.execute('SELECT id, nome, disciplina FROM professor')
     # Obtém todos os registros
     lista = cursor.fetchall()
     # Fecha conexão
@@ -54,7 +54,7 @@ def listar_turma():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     # Executa consulta SQL
-    cursor.execute('SELECT id, nome, turma FROM turma')
+    cursor.execute('SELECT id, semestre, curso, aluno_id FROM turma')
     # Obtém todos os registros
     lista = cursor.fetchall()
     # Fecha conexão
