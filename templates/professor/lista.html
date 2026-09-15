@@ -8,22 +8,20 @@
       <tr>
         <th>ID</th>
         <th>Nome</th>
-        <th>Idade</th>
-        <th>Cidade</th>
+        <th>disciplinas</th>
         <th>Ações</th>
-      </tr>
+         </tr>
     </thead>
     <tbody>
       {% for item in lista_professor %}
       <tr>
-        <td>{{ item[0]}}</td>
+        <td>{{ item[0] }}</td>
         <td>{{ item[1] }}</td>
-        <td>{{ item[2]}}</td>
-        <td>{{ item[3] }}</td>
+        <td>{{ item[2] }}</td>
         <td>
-             <a href="/professor/editar/3" class="btn btn-primary btn-sm">Editar</a>
-          <a href="/professor/remover/3" class="btn btn-danger btn-sm"
-             onclick="return confirm('Tem certeza que deseja remover este registro?');">
+          <a href="/professor/editar/{{ item[0] }}" class="btn btn-primary btn-sm">Editar</a>
+          <a href="/professor/remover/{{ item[0] }}" class="btn btn-danger btn-sm"
+             onclick="return confirm('Tem certeza que deseja remover este professor?');">
              Remover
           </a>
         </td>
@@ -32,7 +30,3 @@
     </tbody>
   </table>
 </div>
-
-        </div>
-
-{% include 'rodape.html' %}

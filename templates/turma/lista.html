@@ -6,17 +6,19 @@
     <thead class="table-dark">
       <tr>
         <th>ID</th>
-        <th>Nome</th>
-        <th>Turma</th>
+        <th>Semestre</th>
+        <th>Curso</th>
+        <th>Aluno ID</th>
         <th>Ações</th>
       </tr>
     </thead>
     <tbody>
       {% for item in lista_turma %}
       <tr>
-        <td>{{ item[0] }}</td>
-        <td>{{ item[1] }}</td>
-        <td>{{ item[2] }}</td>
+        <td>{{ item[0] }}</td>   <!-- id -->
+        <td>{{ item[1] }}</td>   <!-- semestre -->
+        <td>{{ item[2] }}</td>   <!-- curso -->
+        <td>{{ item[3] }}</td>   <!-- aluno_id -->
         <td>
           <a href="/turma/editar/{{ item[0] }}" class="btn btn-primary btn-sm">Editar</a>
           <a href="/turma/remover/{{ item[0] }}" class="btn btn-danger btn-sm"
