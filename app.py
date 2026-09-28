@@ -1,5 +1,7 @@
 from flask import Flask, render_template
-import sqlite3
+from dao.aluno_dao import AlunoDAO
+from dao.professor_dao import ProfessorDAO
+from dao.turma_dao import TurmaDAO
 
 
 app = Flask(__name__)
@@ -21,44 +23,20 @@ def contato():
 
 @app.route('/aluno')
 def listar_aluno():
-    # Conecta ao banco de dados
-    DB_PATH = "banco_escola.db"
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    # Executa consulta SQL
-    cursor.execute('SELECT id, nome, idade, cidade FROM aluno')
-    # Obtém todos os registros
-    lista = cursor.fetchall()
-    # Fecha conexão
-    conn.close()
+    dao = AlunoDAO()
+    lista= dao.listar()
     return render_template('aluno/lista.html', lista_alunos=lista)
 
 @app.route('/professor')
 def listar_professor():
-    # Conecta ao banco de dados
-    DB_PATH = "banco_escola.db"
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    # Executa consulta SQL
-    cursor.execute('SELECT id, nome, disciplinas FROM professor')
-    # Obtém todos os registros
-    lista = cursor.fetchall()
-    # Fecha conexão
-    conn.close()
+    dao = ProfessorDAO()
+    lista = dao.listar()
     return render_template('professor/lista.html', lista_professor=lista)
 
 @app.route('/turma')
 def listar_turma():
-    # Conecta ao banco de dados
-    DB_PATH = "banco_escola.db"
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    # Executa consulta SQL
-    cursor.execute('SELECT id, semestre, curso, aluno_id FROM turma')
-    # Obtém todos os registros
-    lista = cursor.fetchall()
-    # Fecha conexão
-    conn.close()
+    dao = TurmaDAO()
+    lista = dao.listar()
     return render_template('turma/lista.html', lista_turma=lista)
 
 
