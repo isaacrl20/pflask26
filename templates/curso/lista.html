@@ -1,0 +1,35 @@
+{% include 'cabecalho.html' %}
+
+<h1 class="mb-4">Listagem de cursos</h1>
+<div class="row">
+  <div class="row">
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Duração (semestres)</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for curso in lista_curso %}
+        <tr>
+          <td>{{ curso[0] }}</td>
+          <td>{{ curso[1] }}</td>
+          <td>{{ curso[2] }}</td>
+          <td>
+            <a href="/cursos/editar/{{ curso[0] }}" class="btn btn-primary btn-sm">Editar</a>
+            <a href="/cursos/remover/{{ curso[0] }}" class="btn btn-danger btn-sm"
+               onclick="return confirm('Tem certeza que deseja remover este curso?');">
+               Remover
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% include 'rodape.html' %}
