@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template , request
 from dao.aluno_dao import AlunoDAO
 from dao.professor_dao import ProfessorDAO
 from dao.turma_dao import TurmaDAO
@@ -46,11 +46,41 @@ def listar_curso():
     lista = dao.listar()
     return render_template('curso/lista.html', lista_curso=lista)
 
+@app.route('/saudacao')
+def saudacao():
+    return render_template('saudacao/saudacao.html', valor_recebido='Visitante')
 
 
+@app.route('/saudacao1/<nome>')
+def saudacao1(nome):
+    return render_template('saudacao/saudacao.html',valor_recebido = nome)
+
+@app.route('/saudacao2/')
+def saudacao2():
+    nome = request.args.get('nome')
+    return render_template('saudacao/saudacao.html', valor_recebido=nome)
 
 
+@app.route('/login', methods=['POST'])
+def login():
+    usuario = request.form['usuario']
+    senha = request.form['senha']
+    dados = {'Usuário': usuario, 'Senha': senha}
+    return render_template('saudacao/saudacao.html', valor_recebido=dados)
 
+@app.route('/desafio')
+def desafio():
+    return render_template('desafio/desafio.html', valor_recebido='desafiante')
+
+@app.route('/atv', methods=['POST'])
+def atv():
+    nome = request.form['nome']
+    cpf = request.form['cpf']
+    nascimento = request.form['nascimento']
+    nome_mae = request.form['nome_mae']
+
+    dados = {'nome': nome, 'cpf': cpf, 'nascimento' : nascimento, 'nome_mae' : nome_mae}
+    return render_template('desafio/desafio.html', valor_recebido=dados)
 
 
 

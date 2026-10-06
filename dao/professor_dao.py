@@ -1,7 +1,9 @@
-from dao.db_config import get_connection
+from dao.db_config import get_connection 
+
+
 
 class ProfessorDAO:
-    sqlSelect = 'SELECT id, nome, disciplinas FROM professor'
+    sqlSelect = 'SELECT id, nome, disciplina  FROM professor'
     def listar (self):
         conn = get_connection()
         cursor = conn.cursor()

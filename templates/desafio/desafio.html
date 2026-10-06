@@ -1,0 +1,13 @@
+{% include 'cabecalho.html' %}
+
+
+<h1 class="h4"> {{valor_recebido}} </h1>
+<form action="/atv" method="POST">
+    <input type="text" name="nome" placeholder="login"><br>
+    <input type="password" name="cpf" placeholder="cpf"><br>
+    <input type="password" name="nascimento" placeholder="nascimento"><br>
+    <input type="text" name="nome_mae" placeholder="nome_mae"><br>
+    <button type="submit">Enviar</button>
+</form>
+
+{% include 'rodape.html' %}

@@ -1,0 +1,42 @@
+
+{% include 'cabecalho.html' %}
+
+
+<h1 class="h4"> {{valor_recebido}} </h1>
+
+<a href="/saudacao1/Joao">Parâmetro de rota</a><br>
+    <a href="/saudacao2?nome=Maria">Query String</a>
+    <form action="/login" method="POST">
+    <input type="text" name="usuario" placeholder="login"><br>
+    <input type="password" name="senha" placeholder="senha"><br>
+    <button type="submit">Enviar</button>
+</form>
+
+{% include 'rodape.html' %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<a href="/saudacao1/Joao">Parâmetro de rota</a> <br><br>
+
+<a href="/saudacao2/?nome=Maria">Query String</a>
+-->
