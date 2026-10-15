@@ -7,3 +7,5 @@ DB_PATH = "postgresql://neondb_owner:npg_oWFyBZA8ShE1@ep-gentle-block-b7dsn1wf-p
 def get_connection():
     conn = psycopg2.connect (DB_PATH , sslmode='require')
     return conn
+
+
