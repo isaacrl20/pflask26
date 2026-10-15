@@ -81,6 +81,22 @@ def listar_curso():
     lista = dao.listar()
     return render_template('curso/lista.html', lista_curso=lista)
 
+@app.route('/curso/form')  # rota formulário de aluno
+def form_curso():
+    return render_template('curso/form.html', curso=None)
+
+@app.route('/curso/salvar/', methods=['POST'])  # Inserção
+def salvar_curso(id=None):
+    nome_curso = request.form['nome']
+    duracao = request.form['duracao']
+    dao = CursoDAO()
+    result = dao.salvar(id , nome_curso , duracao )
+    if result['status']=='ok':
+        flash("Curso salvo com sucesso!", "success")
+    else:
+        flash(result['mensagem'], "danger")
+    return redirect('/curso')
+
 @app.route('/saudacao')
 def saudacao():
     return render_template('saudacao/saudacao.html', valor_recebido='Visitante')
