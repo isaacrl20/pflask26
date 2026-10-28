@@ -1,30 +1,69 @@
 from dao.db_config import get_connection
 
+
 class AlunoDAO:
-    sqlSelect = 'SELECT id, nome, idade, cidade FROM aluno'
+    sqlSelect = 'SELECT id, nome, idade, cidade FROM aluno ORDER BY id'
 
     def listar(self):
         conn = get_connection()
         cursor = conn.cursor()
-        # Executa consulta SQL
+
         cursor.execute(self.sqlSelect)
-        # Obtém todos os registros
         lista = cursor.fetchall()
-        # Fecha conexão
+
         conn.close()
         return lista
 
     def salvar(self, id, nome, idade, cidade):
         conn = get_connection()
         cursor = conn.cursor()
+
         try:
-            cursor.execute(
-                'INSERT INTO aluno (nome, idade, cidade) VALUES (%s, %s, %s)',
-                (nome, idade, cidade)
-            )
+            if id:
+                cursor.execute(
+                    'UPDATE aluno SET nome = %s, idade = %s, cidade = %s WHERE id = %s',
+                    (nome, idade, cidade, id)
+                )
+            else:
+                cursor.execute(
+                    'INSERT INTO aluno (nome, idade, cidade) VALUES (%s, %s, %s)',
+                    (nome, idade, cidade)
+                )
+
             conn.commit()
             return {"status": "ok"}
+
         except Exception as e:
             return {"status": "erro", "mensagem": f"Erro: {str(e)}"}
+
         finally:
             conn.close()
+
+    def remover(self, id):
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute('DELETE FROM aluno WHERE id = %s', (id,))
+            conn.commit()
+            return {"status": "ok"}
+
+        except Exception as e:
+            return {"status": "erro", "mensagem": f"Erro: {str(e)}"}
+
+        finally:
+            conn.close()
+
+    def buscar_por_id(self, id):
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        cursor.execute(
+            'SELECT id, nome, idade, cidade FROM aluno WHERE id = %s',
+            (id,)
+        )
+
+        registro = cursor.fetchone()
+
+        conn.close()
+        return registro

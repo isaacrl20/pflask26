@@ -1,24 +1,24 @@
 {% include 'cabecalho.html' %}
 
-
-<!-- Formulário de Aluno -->
-<h1 class="mb-4">Cadastrar Professor</h1>
-
+<!-- Formulário de Professor -->
+<h1 class="mb-4">{{ 'Editar Professor' if professor else 'Cadastrar Professor' }}</h1>
 
 <div class="row">
   <div class="col-12">
-    <form action="/professor/salvar/" method="POST">
+    <form action="/professor/salvar/{{ professor[0] if professor else '' }}" method="POST">
 
       <!-- Nome -->
       <div class="mb-3">
         <label for="nome" class="form-label">Nome</label>
-        <input type="text" class="form-control" id="nome" name="nome" value="{{ professor[1] }}" required>
+        <input type="text" class="form-control" id="nome" name="nome"
+               value="{{ professor[1] if professor else '' }}" required>
       </div>
 
       <!-- Disciplina -->
       <div class="mb-3">
         <label for="disciplina" class="form-label">Disciplina</label>
-        <input type="text" class="form-control" id="disciplina" name="disciplina" value="{{ professor[2] }}" required>
+        <input type="text" class="form-control" id="disciplina" name="disciplina"
+               value="{{ professor[2] if professor else '' }}" required>
       </div>
 
       <!-- Botões -->
@@ -30,5 +30,4 @@
   </div>
 </div>
 
-  
-  {% include 'rodape.html' %}
+{% include 'rodape.html' %}
