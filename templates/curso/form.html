@@ -1,23 +1,37 @@
 {% include 'cabecalho.html' %}
 
-<!-- Formulário de Curso -->
+{% set opcoes = ['Administração', 'Eletrotécnica', 'Enfermagem', 'Informática'] %}
+
 <h1 class="mb-4">{{ 'Editar Curso' if curso else 'Cadastrar Curso' }}</h1>
 
 <div class="row">
   <div class="col-12">
     <form action="/curso/salvar/{{ curso[0] if curso else '' }}" method="POST">
 
-      <!-- Nome -->
+      <!-- Nome do curso -->
       <div class="mb-3">
-        <label for="nome" class="form-label">Nome</label>
-        <input type="text" class="form-control" id="nome" name="nome"
-              value="{{ curso[1] if curso else '' }}" required>
+        <label for="nome_curso" class="form-label">Nome do curso</label>
+        <select name="nome_curso" id="nome_curso" class="form-select" required>
+          <option value="" disabled {% if not curso %}selected{% endif %}>Selecione um curso</option>
+
+          {% for opcao in opcoes %}
+            <option value="{{ opcao }}"
+              {% if curso and curso[1] == opcao %}selected{% endif %}>
+              {{ opcao }}
+            </option>
+          {% endfor %}
+
+          {# se o curso salvo tiver um nome fora da lista, ele ainda aparece #}
+          {% if curso and curso[1] not in opcoes %}
+            <option value="{{ curso[1] }}" selected>{{ curso[1] }}</option>
+          {% endif %}
+        </select>
       </div>
 
       <!-- Duração -->
       <div class="mb-3">
-        <label for="duracao" class="form-label">Duração</label>
-        <input type="text" class="form-control" id="duracao" name="duracao"
+        <label for="duracao" class="form-label">Duração (semestres)</label>
+        <input type="number" min="1" class="form-control" id="duracao" name="duracao"
               value="{{ curso[2] if curso else '' }}" required>
       </div>
 

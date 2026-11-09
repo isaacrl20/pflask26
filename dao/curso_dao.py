@@ -2,7 +2,15 @@ from dao.db_config import get_connection
 
 
 class CursoDAO:
-    sqlSelect = 'SELECT id, nome_curso, duracao FROM curso ORDER BY id'
+
+    sqlSelect = """
+        SELECT
+            id,
+            nome_curso,
+            duracao
+        FROM curso
+        ORDER BY id DESC
+    """
 
     def listar(self):
         conn = get_connection()
@@ -21,12 +29,21 @@ class CursoDAO:
         try:
             if id:
                 cursor.execute(
-                    'UPDATE curso SET nome_curso = %s, duracao = %s WHERE id = %s',
+                    """
+                    UPDATE curso
+                    SET nome_curso = %s,
+                        duracao = %s
+                    WHERE id = %s
+                    """,
                     (nome_curso, duracao, id)
                 )
             else:
                 cursor.execute(
-                    'INSERT INTO curso (nome_curso, duracao) VALUES (%s, %s)',
+                    """
+                    INSERT INTO curso
+                    (nome_curso, duracao)
+                    VALUES (%s, %s)
+                    """,
                     (nome_curso, duracao)
                 )
 
@@ -34,7 +51,11 @@ class CursoDAO:
             return {"status": "ok"}
 
         except Exception as e:
-            return {"status": "erro", "mensagem": f"Erro: {str(e)}"}
+            conn.rollback()
+            return {
+                "status": "erro",
+                "mensagem": f"Erro: {str(e)}"
+            }
 
         finally:
             conn.close()
@@ -44,7 +65,14 @@ class CursoDAO:
         cursor = conn.cursor()
 
         cursor.execute(
-            'SELECT id, nome_curso, duracao FROM curso WHERE id = %s',
+            """
+            SELECT
+                id,
+                nome_curso,
+                duracao
+            FROM curso
+            WHERE id = %s
+            """,
             (id,)
         )
 
@@ -58,12 +86,27 @@ class CursoDAO:
         cursor = conn.cursor()
 
         try:
-            cursor.execute('DELETE FROM curso WHERE id = %s', (id,))
+            cursor.execute(
+                "DELETE FROM curso WHERE id = %s",
+                (id,)
+            )
+
             conn.commit()
             return {"status": "ok"}
 
         except Exception as e:
-            return {"status": "erro", "mensagem": f"Erro: {str(e)}"}
+            conn.rollback()
+
+            if "foreign key" in str(e).lower():
+                return {
+                    "status": "erro",
+                    "mensagem": "Não é possível remover: existem turmas vinculadas a este curso."
+                }
+
+            return {
+                "status": "erro",
+                "mensagem": f"Erro: {str(e)}"
+            }
 
         finally:
             conn.close()
